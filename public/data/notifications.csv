@@ -1,0 +1,80 @@
+key;categorie;sujet_email;push_content;trigger;canal;cible;etape;timing;open_rate;volume_mois;statut;date_ajout;wording_url;jira_ticket;retake;body_html
+approved (Social);Order;Get. Excited. Your Product(s) Are On The Way!;;Order approved (social);Email;social;candidature;Approved;65%;94000;en_prod;;;;
+approved_for_creator_consumer;Order;Yay! Your product order is confirmed!;;Order approved (consumer);Email;consumer;candidature;Approved;62%;52000;en_prod;;;;
+declined (order social);Order;Can We Interest You In Something Else?;;Order declined by brand;Email;social;candidature;Approved;45%;23000;en_prod;;;;
+shipped (view_created);Order;Ship Ship Hooray!;;Product shipped;Email;both;expedition;Shipping;58%;87000;en_prod;;;;
+approved_after_pending;Order;We successfully fixed your shipping issue!;;Shipping issue resolved;Email;both;expedition;Shipping;42%;3200;en_prod;;;;
+canceled_before_ship_no_response_from_store;Order;DKNY didn't answer to your request;;Brand did not respond;Email;social;expedition;Shipping;38%;1200;en_prod;;;;
+canceled_before_ship_out_of_stock;Order;Can We Interest You In Something Else?;;Out of stock;Email;social;expedition;Shipping;40%;2800;en_prod;;;;
+canceled_after_pending;Order;We Hate To Break This To You...;;Shipping issue canceled;Email;social;expedition;Shipping;36%;900;en_prod;;;;
+campaign_reviewable_for_creator;Order;Review publication opening;;Campaign open for review;Email;social;review;D+2;55%;45000;en_prod;;;;Rework subject line for clarity
+reminder_one_for_creator;Order;How's That Review Coming Along?;Hey! Your review deadline is approaching;Reminder D-10/D-14 (Social);Email + Push;social;rappels;D-14/D-10;48%;62000;en_prod;;https://skeepers.atlassian.net/wiki/spaces/PROD/pages/reminder-social;IMP-11359;;
+reminder_one_for_creator_consumer;Order;How's That Review Coming Along?;Your review deadline is in 7 days;Reminder D-7 (Consumer);Email + Push;consumer;rappels;D-7;44%;38000;en_prod;;;;;
+reminder_five_for_creator_consumer;Order;Time's almost up! 3 days left...;Only 3 days left to post your review!;Reminder D-3 (Consumer);Email + Push;consumer;rappels;D-3;52%;35000;en_prod;;;;Add urgency to push copy
+reminder_for_creator_social_d5;Order;5 days left to share your review!;5 days remaining for your review;Reminder D-5 (Social);Email + Push;social;rappels;D-5;46%;28000;en_prod;2025-01-15;;IMP-6932;;
+reminder_two_for_creator;Order;[Brand] Is Dying To See Your Review!;Last chance! Post your review today;Reminder D-1 (Social);Email + Push;social;rappels;D-1;55%;60000;en_prod;;;;;
+reminder_two_for_creator_consumer;Order;[Brand] Is Dying To See Your Review!;Final day to post your review!;Reminder D-1 (Consumer);Email + Push;consumer;rappels;D-1;53%;32000;en_prod;;;;;
+expired_for_creator;Order;Your credit expired but don't worry...;;Order expired;Email;social;review_expiree;Expired;35%;18000;en_prod;;;;Improve re-engagement CTA
+review_created;Order;Your Review Is Fire;;Review published;Email;social;review;;60%;41000;en_prod;;;;<p>Hi {{creator_name}},</p><p>Your review for <strong>{{brand_name}}</strong> is live! Thanks for sharing your experience with the community.</p><p>Keep up the great work!</p>
+review_created_consumer;Order;We love your review!;;Review published (consumer);Email;consumer;review;;58%;22000;en_prod;;;;;
+reviewed;Order;Your campaign is complete!;;All reviews done;Email;both;review;;62%;39000;en_prod;;;;;
+review_ftc_status_failed;Order;Almost there! Your review need some adjustment;;FTC check failed;Email;social;review;;40%;8500;en_prod;;;;;
+review_ftc_status_success;Order;Your review has been accepted!;;FTC check passed;Email;social;review;;65%;37000;en_prod;;;;;
+last_review_deleted;Order;Modify Your Review Pretty Please!;;First review deleted (brand report);Email;social;review_expiree;Expired;33%;4200;en_prod;;;;;
+one_review_deleted;Order;Your additional review has been deleted!;;Review deleted (brand report);Email;social;review_expiree;Expired;30%;2100;en_prod;;;;;
+social review_not_reposted_for_creator;Order;It's been 5 days...;;Review not reposted within 5d;Email;social;review_expiree;Expired;28%;6800;en_prod;;;;;
+one_review_removed_for_creator;Order;Your additional review has been deleted!;;Review removed before 30d;Email;social;review_expiree;Expired;29%;1800;en_prod;;;;;
+last_review_removed_for_creator;Order;Where'd your review go?;;Last review removed before 30d;Email;social;review_expiree;Expired;31%;2400;en_prod;;;;;
+new_personalized_affiliate_link;Order;Your exclusive affiliate link inside!;;Affiliate link sent by brand;Email;social;communication;;50%;15000;en_prod;;;;;
+new_promo_code;Order;Sharing is caring. Ton code promo...;;Promo code sent by brand;Email;social;communication;;47%;12000;en_prod;;;;;
+creators:confirmation_instructions;Onboarding;You're Almost There! Confirm Email;;Signup confirmation;Email;both;signup;;70%;110000;en_prod;;;;<p>Welcome to Skeepers!</p><p>Please confirm your email address by clicking the button below to get started.</p><p><a href="{{confirm_url}}">Confirm my email</a></p>
+email_confirmed;Onboarding;OMG! 300+ Brands are Waiting...;;Email confirmed;Email;both;signup;;68%;95000;en_prod;;;;;
+email_confirmation_reminder;Onboarding;You're almost done! Finish your Skeepers Sign Up!;;Email not confirmed;Email;both;signup;;42%;45000;en_prod;;;;;
+platform_account_enabled;Onboarding;Congratulations! You can now participate...;;Account validated;Email;both;connexion;;72%;80000;en_prod;;;;;
+add_social_account_reminder;Onboarding;OMG! There Are 300+ Brands Waiting...;;Add social account;Email;social;connexion;;38%;52000;en_prod;;;;;
+confirm_youtube_account_reminder;Onboarding;Confirm your YouTube account...;;YouTube not confirmed;Email;social;connexion;;35%;8000;en_prod;;;;;
+platform_account_refused_awaiting_content_check;Onboarding;Your social account didn't pass Content check;;Content check failed;Email;social;connexion;;30%;6500;en_prod;;;;;
+platform_account_refused_awaiting_quality_check;Onboarding;didn't pass Skeepers Quality Check;;Quality check failed;Email;social;connexion;;28%;5200;en_prod;;;;;
+platform_account_refused_awaiting_quantity_check;Onboarding;We reviewed your account... Quantity Check;;Quantity check failed;Email;social;connexion;;27%;4800;en_prod;;;;;
+platform_account_refused_awaiting_manual_check;Onboarding;didn't pass Editorial Check;;Editorial check failed;Email;social;connexion;;26%;3200;en_prod;;;;;
+platform_account_refused_awaiting_basic_check;Onboarding;didn't pass Basic Check;;Basic eligibility failed;Email;social;connexion;;25%;2900;en_prod;;;;;
+too_many_flags_for_creator;Moderation;Your review has been deleted...;;Second review flagged;Email;social;moderation;;22%;1500;en_prod;;;;;
+too_many_expired_orders;Moderation;Your account has been disabled;;4+ expired credits;Email;both;moderation;;18%;800;en_prod;;;;;
+platform_account_disabled;Moderation;Your account on Skeepers;;Account no longer eligible;Email;both;moderation;;20%;1100;en_prod;;;;;
+diploma:threshold_reached;Retention;Congratulations on reaching [X] followers!;;Follower threshold (10k-200k);Email;social;recompenses;;55%;7500;en_prod;;;;;
+no_order_since_review;Retention;More FREE Stuff Awaits!;;No order since review;Email;social;reengagement;;32%;25000;en_prod;;;;;
+no_order_since_declined;Retention;Hey It Happens! Keep hope;;No order since decline;Email;social;reengagement;;28%;18000;en_prod;;;;;
+w_c;Retention;Quick question! Hey... where are you?;;Win-back 15d inactive;Email;social;reengagement;;24%;42000;en_prod;;;;Personalize with last campaign name
+campaigns_digest;Retention;Check out these campaigns in your Free Store!;;Weekly digest Mon 7pm EU;Email;social;campagne;;35%;150000;en_prod;;;;;
+reset_password_instructions;Account;Skeepers - Reset password instructions;;Password reset request;Email;both;signup;;80%;12000;en_prod;;;;;
+creators:reconfirmation_instructions;Account;You're Almost There! Confirm your new Email;;Email change confirmation;Email;both;signup;;75%;3500;en_prod;;;;;
+entity_not_accessible;Account;We can't see you! Where are you?;;Account deleted or private;Email;social;connexion;;30%;9000;en_prod;;;;;
+new_message_from_store;Communication;[Brand] has just sent you a personal message;;New message from brand;Email;social;communication;;68%;22000;en_prod;;;;;
+Invitation (brand);New Campaign;Brand invitation after campaign launch;;Brand invites creator to campaign;Email;social;campagne;;;"pas_en_prod";2025-04;https://www.figma.com/design/invitation-brand;IMP-11360;;
+Invitation on matching rate;New Campaign;User >80% matching 1x/day;;High matching rate daily notification;Email;social;campagne;;;"pas_en_prod";2025-09;;IMP-11361;;
+order:reminder_review_guidance;Reminder;Brief reminder 2d after shipping;Check out the brief for your upcoming review!;Brief reminder post-shipping;Email + Push;social;rappels;D+2;;"ajout_proposed";2025-03;https://skeepers.atlassian.net/wiki/spaces/PROD/pages/brief-reminder;IMP-11362;Consider merging with activation email;
+Brand loved your review;Order;Brand feedback on your review;;Brand sends positive feedback;Email;social;review;;;"pas_en_prod";;;;
+push_reminder_social_d5;Reminder;;5 days left! Share your review now;Push reminder D-5 Social;Push;social;rappels;D-5;38%;28000;en_prod;2025-02-01;;IMP-6932;;
+push_reminder_social_d3;Reminder;;Hurry! 3 days to post your review;Push reminder D-3 Social;Push;social;rappels;D-3;42%;25000;en_prod;2025-02-01;;;;
+push_new_campaign;New Campaign;;New campaigns matching your profile are available!;New campaign push notification;Push;social;campagne;;35%;95000;en_prod;;;;
+push_shipping_update;Order;;Your product has been shipped!;Shipping confirmation push;Push;both;expedition;Shipping;60%;87000;en_prod;2024-11-01;;;;
+push_review_accepted;Order;;Your review has been accepted!;Review accepted push;Push;social;review;;58%;37000;en_prod;2024-11-01;;;;
+after_30_inactive_days;Retention;;;30 days inactive;;Email;social;archive;;;a_supprimer;;;;
+confirm_instagram_account_reminder;Onboarding;;;Instagram confirmation reminder;;Email;social;archive;;;a_supprimer;;;;
+confirm_tiktok_account_reminder;Onboarding;;;TikTok confirmation reminder;;Email;social;archive;;;a_supprimer;;;;
+create_password;Account;;;Account password creation;;Email;both;archive;;;a_supprimer;;;;
+email_confirmation;Onboarding;;;Legacy email confirmation;;Email;both;archive;;;a_supprimer;;;;
+events:before_reminder;Order;;;Legacy event reminder;;Email;social;archive;;;a_supprimer;;;;
+events:first_review_reminder;Order;;;Legacy first review reminder;;Email;social;archive;;;a_supprimer;;;;
+events:request:approved;Order;;;Legacy request approved;;Email;social;archive;;;a_supprimer;;;;
+events:request:declined;Order;;;Legacy request declined;;Email;social;archive;;;a_supprimer;;;;
+events:second_review_reminder;Order;;;Legacy second review reminder;;Email;social;archive;;;a_supprimer;;;;
+late_for_creator;Order;;;Legacy late notification;;Email;social;archive;;;a_supprimer;;;;
+licensing_request_expired;Order;;;Legacy licensing expired;;Email;social;archive;;;a_supprimer;;;;
+licensing_request_reminder;Order;;;Legacy licensing reminder;;Email;social;archive;;;a_supprimer;;;;
+new_approved_licensing_request;Order;;;Legacy approved licensing;;Email;social;archive;;;a_supprimer;;;;
+new_licensing_request;Order;;;Legacy licensing request;;Email;social;archive;;;a_supprimer;;;;
+refer_a_friend;Retention;;;Legacy referral;;Email;social;archive;;;a_supprimer;;;;
+reminder_for_creator;Order;;;Legacy generic reminder;;Email;social;archive;;;a_supprimer;;;;
+warning_for_creator;Order;;;Legacy warning;;Email;social;archive;;;a_supprimer;;;;
+welcome;Onboarding;;;Legacy welcome email;;Email;both;archive;;;a_supprimer;;;;
