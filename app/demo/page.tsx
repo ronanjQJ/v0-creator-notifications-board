@@ -7,24 +7,19 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { StatsBar } from "@/components/stats-bar"
-import { FiltersBar, type Filters } from "@/components/filters-bar"
+import { FiltersBar, DEFAULT_FILTERS, applyFilters, type Filters } from "@/components/filters-bar"
 import { TimelineView } from "@/components/timeline-view"
 import { AllNotificationsView } from "@/components/all-notifications-view"
-import { parseCSV, type Notification } from "@/lib/csv-parser"
+import { parseCSV, type NotificationRow } from "@/lib/csv-parser"
 
 export default function DemoPage() {
-  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [notifications, setNotifications] = useState<NotificationRow[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  const [filters, setFilters] = useState<Filters>({
-    search: "",
-    channels: [],
-    statuses: ["en_prod"],
-    audiences: [],
-  })
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
 
   useEffect(() => {
     setMounted(true)
@@ -50,42 +45,9 @@ export default function DemoPage() {
     loadDemoData()
   }, [])
 
-  // Filter notifications
+  // Filter notifications using the shared applyFilters function
   const filteredNotifications = useMemo(() => {
-    return notifications.filter((n) => {
-      // Search filter
-      if (filters.search) {
-        const searchLower = filters.search.toLowerCase()
-        const matchesSearch =
-          n.key.toLowerCase().includes(searchLower) ||
-          n.declencheur.toLowerCase().includes(searchLower) ||
-          (n.sujetEmail?.toLowerCase().includes(searchLower)) ||
-          (n.pushContent?.toLowerCase().includes(searchLower))
-        if (!matchesSearch) return false
-      }
-
-      // Channel filter
-      if (filters.channels.length > 0) {
-        const matchesChannel = filters.channels.some((ch) => {
-          if (ch === "Email") return n.canal === "Email" || n.canal === "Email + Push"
-          if (ch === "Push") return n.canal === "Push" || n.canal === "Email + Push"
-          return false
-        })
-        if (!matchesChannel) return false
-      }
-
-      // Status filter
-      if (filters.statuses.length > 0) {
-        if (!filters.statuses.includes(n.statut)) return false
-      }
-
-      // Audience filter
-      if (filters.audiences.length > 0) {
-        if (!filters.audiences.includes(n.cible)) return false
-      }
-
-      return true
-    })
+    return applyFilters(notifications, filters)
   }, [notifications, filters])
 
   if (loading) {
@@ -148,11 +110,7 @@ export default function DemoPage() {
       <StatsBar data={filteredNotifications} filters={filters} />
 
       {/* Filters */}
-      <FiltersBar
-        filters={filters}
-        onFiltersChange={setFilters}
-        notifications={notifications}
-      />
+      <FiltersBar filters={filters} onChange={setFilters} />
 
       {/* Main Content */}
       <main className="container py-6">
@@ -162,10 +120,10 @@ export default function DemoPage() {
             <TabsTrigger value="all">All Notifications</TabsTrigger>
           </TabsList>
           <TabsContent value="timeline">
-            <TimelineView notifications={filteredNotifications} />
+            <TimelineView data={filteredNotifications} />
           </TabsContent>
           <TabsContent value="all">
-            <AllNotificationsView notifications={filteredNotifications} />
+            <AllNotificationsView data={filteredNotifications} />
           </TabsContent>
         </Tabs>
       </main>
