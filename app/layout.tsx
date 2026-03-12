@@ -8,7 +8,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jet
 
 export const metadata: Metadata = {
   title: {
-    default: 'Creator Notifications Board',
+    default: 'Upload CSV – Creator Notifications',
     template: '%s – Creator Notifications',
   },
   description: 'Visualize the full notification landscape for creators across their journey',

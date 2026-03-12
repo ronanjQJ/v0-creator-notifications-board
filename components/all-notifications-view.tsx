@@ -19,9 +19,9 @@ export function AllNotificationsView({ data }: AllNotificationsViewProps) {
       map.get(cat)!.push(row)
     }
 
-    // Sort within each group alphabetically by key
+    // Sort within each group by volume descending
     for (const [, rows] of map) {
-      rows.sort((a, b) => a.key.localeCompare(b.key))
+      rows.sort((a, b) => (b.volume_mois ?? 0) - (a.volume_mois ?? 0))
     }
 
     // Sort categories by defined order
