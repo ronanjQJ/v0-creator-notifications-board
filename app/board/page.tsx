@@ -56,14 +56,14 @@ export default function BoardPage() {
     return (
       <div className="min-h-screen bg-background">
         <header className="border-b border-border bg-card/80 backdrop-blur-sm">
-          <div className="mx-auto flex max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6">
+          <div className="container flex items-center justify-between py-4">
             <h1 className="text-lg font-bold tracking-tight text-foreground">
               Creator Notifications Board
             </h1>
             <ThemeToggle />
           </div>
         </header>
-        <main className="mx-auto flex max-w-md flex-col items-center gap-6 px-4 pt-24 sm:px-6 text-center">
+        <main className="container flex flex-col items-center gap-6 pt-24 text-center max-w-md mx-auto">
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
             <FileWarning className="h-7 w-7 text-muted-foreground" />
           </div>
@@ -88,7 +88,7 @@ export default function BoardPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-border bg-card/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1800px] items-center justify-between px-4 py-3 sm:px-6">
+        <div className="container flex items-center justify-between py-3">
           <div className="flex flex-col gap-0.5">
             <h1 className="text-lg font-bold tracking-tight text-foreground sm:text-xl">
               Creator Notifications Board
@@ -113,7 +113,7 @@ export default function BoardPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1800px] px-4 py-4 sm:px-6">
+      <main className="container py-4">
         <Tabs defaultValue="timeline" className="flex flex-col gap-4">
           <div className="sticky top-[73px] z-20 -mx-4 border-b border-border bg-background/80 px-4 pb-3 pt-1 backdrop-blur-sm sm:-mx-6 sm:px-6">
             <div className="flex flex-col gap-3">
