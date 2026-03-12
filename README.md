@@ -1,52 +1,75 @@
 # Creator Notifications Board
 
-A visual dashboard to explore and manage creator notification campaigns across their journey.
-Demo : https://v0-creator-notifications-board-hwkud514a.vercel.app/demo
+A CSV-fed dashboard that maps every notification sent to creators across their journey.
+Built by a PM, for PMs. No engineering resources required.
+
+**Live demo:** [v0-creator-notifications-board-hwkud514a.vercel.app/demo](https://v0-creator-notifications-board-hwkud514a.vercel.app/demo)
+
+## Why I built this
+
+Working on a creator-facing SaaS product, I kept getting the same question 
+from stakeholders: "What exactly do we send to our users?" No one had a clear 
+answer. The information was scattered across email tools, docs, and people's 
+heads. I spent hours mapping it manually — then realized this was a PM problem 
+worth solving properly.
+
+## The Problem
+
+PMs and product teams need a single view of their notification landscape. Today 
+it's scattered across email platforms, Confluence, and tribal knowledge. 
+Answering "What do we send?" or "Where are the gaps?" takes days instead of minutes.
+
+## The Solution
+
+Two views:
+- **Campaign Timeline** – Order lifecycle (application → review → expiry). 
+Spot gaps at a glance.
+- **All Notifications** – Grouped by category with filters 
+(Audience, Channel, Status, Search).
+
+Edit a CSV in Sheets/Excel, upload it, done. No backend.
 
 ## Features
 
-- **Campaign Timeline View** - Visualize notifications across journey stages (Application → Review/Expired)
-- **All Notifications View** - Browse all notifications grouped by category, sorted by volume
-- **Filtering** - Search, filter by channel (Email/Push), status, and audience
-- **Dark Mode** - Toggle between light and dark themes
+- Timeline and list views
+- Filter by channel, status, audience
+- "See full text" modal for email body
+- Dark mode
+- Demo mode with sample data (no upload needed)
 
 ## Getting Started
 
 ### Demo
-
-Visit `/demo` to see the board with sample data - no upload required.
+Visit `/demo` — sample data loaded automatically, no upload required.
 
 ### With Your Own Data
-
 1. Go to `/` (upload page)
-2. Upload a CSV file or paste CSV content
-3. Click "Upload and view board"
-4. You'll be redirected to `/board` with your data
+2. Upload your CSV
+3. You'll be redirected to `/board`
 
 ## CSV Format
-
-Your CSV should include these columns:
 
 | Column | Description |
 |--------|-------------|
 | `cle` | Unique notification key |
 | `categorie` | Category grouping |
-| `canal` | Channel: `email`, `push`, or `email + push` |
-| `statut` | Status: `en_prod`, `proposed`, `planned`, `removed` |
+| `canal` | `email`, `push`, or `email + push` |
+| `statut` | `en_prod`, `proposed`, `planned`, `removed` |
 | `declencheur` | Trigger description |
-| `timing` | Timing info (e.g., "D+3", "Instant") |
-| `cible` | Audience: `social`, `consumer`, or `both` |
+| `timing` | e.g. "D+3", "Instant" |
+| `cible` | `social`, `consumer`, or `both` |
 | `sujet_email` | Email subject line |
 | `push_content` | Push notification content |
 | `body_html` | Full HTML body (optional) |
-| `wording_url` | Link to wording document |
-| `jira_ticket` | Jira ticket reference |
-| `date_added` | Date added (YYYY-MM-DD) |
+| `wording_url` | Link to wording doc |
+| `jira_ticket` | Jira reference |
+| `date_added` | YYYY-MM-DD |
 | `volume_mois` | Monthly volume |
 
-## Tech Stack
+## Tradeoffs
 
-- Next.js 15
-- React 19
-- Tailwind CSS 4
-- shadcn/ui components
+- **CSV as source** – No real-time sync, but zero backend. PMs know Sheets/Excel.
+- **v0.dev** – Shipped fast. Prompt is versioned for regeneration.
+- **Demo mode** – Separate route, never touches your real data.
+
+## What
