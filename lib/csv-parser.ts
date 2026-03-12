@@ -227,7 +227,7 @@ export function parseCSV(text: string): NotificationRow[] {
       categorie: obj["categorie"] ?? "",
       sujet_email: obj["sujet_email"] ?? obj["sujet"] ?? "",
       push_content: obj["push_content"] ?? "",
-      trigger: obj["trigger"] ?? "",
+      trigger: obj["trigger"] ?? obj["declencheur"] ?? "",
       canal: normalizeCanal(obj["canal"] ?? "Email"),
       cible: normalizeCible(obj["cible"] ?? "social"),
       etape: (obj["etape"] ?? "").toLowerCase().trim(),
