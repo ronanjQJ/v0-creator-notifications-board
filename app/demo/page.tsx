@@ -145,7 +145,7 @@ export default function DemoPage() {
       </header>
 
       {/* Stats */}
-      <StatsBar notifications={filteredNotifications} filters={filters} />
+      <StatsBar data={filteredNotifications} filters={filters} />
 
       {/* Filters */}
       <FiltersBar
