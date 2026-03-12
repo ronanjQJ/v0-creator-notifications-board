@@ -73,6 +73,17 @@ Visit the [live demo](https://v0-creator-notifications-board-hwkud514a.vercel.ap
 The Campaign Timeline view is the killer feature. For lifecycle-driven products, 
 a timeline beats a flat list. CSV + Sheets = PM-friendly, near-zero errors.
 
+## Feedback
+
+> "So great to finally visualize all emails in one place, super useful!!"
+> — Product teammate
+
+> "That's soo cooool!!"  
+> — QA
+
+> "Super cool, thanks!"  
+> — Engineer
+
 ## Tech Stack
 
 Next.js 15 · React 19 · Tailwind CSS 4 · shadcn/ui
