@@ -78,18 +78,23 @@ export default function DemoPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center justify-between">
-          <div className="flex items-center gap-3">
-            <h1 className="text-lg font-semibold">Creator Notifications Board</h1>
-            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+        <div className="container mx-auto flex h-14 items-center justify-between px-4">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <h1 className="text-base sm:text-lg font-semibold truncate">Creator Notifications Board</h1>
+            <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
               Demo
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" asChild>
+          <div className="flex items-center gap-2 shrink-0">
+            <Button variant="outline" size="sm" asChild className="hidden sm:inline-flex">
               <Link href="/">
                 <Upload className="mr-2 h-4 w-4" />
                 Upload your CSV
+              </Link>
+            </Button>
+            <Button variant="outline" size="icon" asChild className="sm:hidden">
+              <Link href="/">
+                <Upload className="h-4 w-4" />
               </Link>
             </Button>
             {mounted && (
@@ -106,23 +111,25 @@ export default function DemoPage() {
         </div>
       </header>
 
-      {/* Stats */}
-      <StatsBar data={filteredNotifications} filters={filters} />
-
-      {/* Filters */}
-      <FiltersBar filters={filters} onChange={setFilters} />
+      {/* Stats + Filters */}
+      <div className="sticky top-14 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 py-3 space-y-3">
+          <StatsBar data={filteredNotifications} filters={filters} />
+          <FiltersBar filters={filters} onChange={setFilters} />
+        </div>
+      </div>
 
       {/* Main Content */}
-      <main className="container py-6">
-        <Tabs defaultValue="timeline" className="w-full">
-          <TabsList className="mb-6">
-            <TabsTrigger value="timeline">Campaign Timeline</TabsTrigger>
-            <TabsTrigger value="all">All Notifications</TabsTrigger>
+      <main className="container mx-auto px-4 py-4">
+        <Tabs defaultValue="timeline" className="flex flex-col gap-4">
+          <TabsList className="w-fit">
+            <TabsTrigger value="timeline" className="text-xs sm:text-sm">Campaign Timeline</TabsTrigger>
+            <TabsTrigger value="all" className="text-xs sm:text-sm">All Notifications</TabsTrigger>
           </TabsList>
-          <TabsContent value="timeline">
+          <TabsContent value="timeline" className="mt-0">
             <TimelineView data={filteredNotifications} />
           </TabsContent>
-          <TabsContent value="all">
+          <TabsContent value="all" className="mt-0">
             <AllNotificationsView data={filteredNotifications} />
           </TabsContent>
         </Tabs>
