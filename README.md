@@ -3,8 +3,6 @@
 A CSV-fed dashboard that maps every notification sent to creators across their journey.
 Built by a PM, for PMs. No engineering resources required.
 
-**Live demo:** [v0-creator-notifications-board-hwkud514a.vercel.app/demo](https://v0-creator-notifications-board-hwkud514a.vercel.app/demo)
-
 ## Why I built this
 
 Working on a creator-facing SaaS product, I kept getting the same question 
