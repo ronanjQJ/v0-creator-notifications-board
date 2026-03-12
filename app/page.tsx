@@ -1,148 +1,240 @@
 "use client"
 
-import { useState, useEffect, useMemo, useCallback } from "react"
-import type { NotificationRow } from "@/lib/csv-parser"
+import { useState, useRef, useCallback } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { parseCSV } from "@/lib/csv-parser"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { StatsBar } from "@/components/stats-bar"
-import { FiltersBar, applyFilters, DEFAULT_FILTERS } from "@/components/filters-bar"
-import type { Filters } from "@/components/filters-bar"
-import { TimelineView } from "@/components/timeline-view"
-import { AllNotificationsView } from "@/components/all-notifications-view"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { LogoutButton } from "@/components/logout-button"
-import { RefreshCw, Clock, LayoutGrid, FileWarning, Info } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Upload, FileText, ClipboardPaste, ArrowRight, Eye } from "lucide-react"
 
-export default function BoardPage() {
-  const [rawData, setRawData] = useState<NotificationRow[] | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
+const STORAGE_KEY = "creator-notifications-data"
 
-  const loadCSV = useCallback(async () => {
-    try {
-      const res = await fetch("/data/notifications.csv")
-      if (!res.ok) return
-      const text = await res.text()
-      const rows = parseCSV(text)
-      if (rows.length > 0) setRawData(rows)
-    } catch {
-      // silently fail
-    } finally {
-      setLoading(false)
+export default function UploadPage() {
+  const router = useRouter()
+  const [isDragging, setIsDragging] = useState(false)
+  const [fileName, setFileName] = useState<string | null>(null)
+  const [pasteContent, setPasteContent] = useState("")
+  const [fileContent, setFileContent] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const processFile = useCallback((file: File) => {
+    setError(null)
+    setFileName(file.name)
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const text = e.target?.result as string
+      setFileContent(text)
+      setPasteContent("")
     }
+    reader.onerror = () => setError("Failed to read file.")
+    reader.readAsText(file)
   }, [])
 
-  useEffect(() => {
-    loadCSV()
-  }, [loadCSV])
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault()
+      setIsDragging(false)
+      const file = e.dataTransfer.files[0]
+      if (file && (file.name.endsWith(".csv") || file.type === "text/csv")) {
+        processFile(file)
+      } else {
+        setError("Please drop a .csv file.")
+      }
+    },
+    [processFile]
+  )
 
-  const filteredData = useMemo(() => {
-    if (!rawData) return []
-    return applyFilters(rawData, filters)
-  }, [rawData, filters])
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0]
+      if (file) processFile(file)
+    },
+    [processFile]
+  )
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-3">
-          <RefreshCw className="h-6 w-6 animate-spin text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">Loading board...</p>
-        </div>
-      </div>
-    )
+  const handlePasteChange = (val: string) => {
+    setPasteContent(val)
+    if (val.trim()) {
+      setFileName(null)
+      setFileContent(null)
+    }
   }
 
-  if (!rawData) {
-    return (
-      <div className="min-h-screen bg-background">
-        <header className="border-b border-border bg-card/80 backdrop-blur-sm">
-          <div className="mx-auto flex max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6">
-            <h1 className="text-lg font-bold tracking-tight text-foreground">
-              Creator Notifications Board
-            </h1>
-            <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <LogoutButton />
-            </div>
-          </div>
-        </header>
-        <main className="mx-auto flex max-w-md flex-col items-center gap-6 px-4 pt-24 sm:px-6 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
-            <FileWarning className="h-7 w-7 text-muted-foreground" />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <h2 className="text-xl font-bold text-foreground">No data available</h2>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              The notifications CSV could not be loaded. Please try again later.
-            </p>
-          </div>
-        </main>
-      </div>
-    )
+  const handleSubmit = () => {
+    setError(null)
+    const raw = fileContent ?? pasteContent
+    if (!raw || !raw.trim()) {
+      setError("Please upload a file or paste CSV content first.")
+      return
+    }
+
+    const rows = parseCSV(raw)
+    if (rows.length === 0) {
+      setError(
+        "No valid data found. Check that the CSV has the expected columns (key, categorie, sujet_email, trigger, etape, etc.)."
+      )
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(rows))
+      router.push("/board")
+    } catch {
+      setError("Failed to store data. The CSV might be too large.")
+      setSubmitting(false)
+    }
   }
+
+  const hasInput = Boolean(fileContent || pasteContent.trim())
+  const buttonLabel = fileName ? "Upload and view board" : "View board"
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-border bg-card/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1800px] items-center justify-between px-4 py-3 sm:px-6">
-          <div className="flex flex-col gap-0.5">
-            <h1 className="text-lg font-bold tracking-tight text-foreground sm:text-xl">
-              Creator Notifications Board
-            </h1>
-            <StatsBar data={rawData} />
-          </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LogoutButton />
-          </div>
+      <header className="border-b border-border bg-card/80 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4 sm:px-6">
+          <h1 className="text-lg font-bold tracking-tight text-foreground">
+            Upload CSV
+          </h1>
+          <ThemeToggle />
         </div>
       </header>
 
-      {/* Tip banner */}
-      <div className="mx-auto max-w-[1800px] px-4 pt-3 sm:px-6">
-        <div className="flex items-start gap-2.5 rounded-lg border border-sky-200 dark:border-sky-800/60 bg-sky-50 dark:bg-sky-950/30 px-3.5 py-2.5">
-          <Info className="mt-0.5 h-4 w-4 shrink-0 text-sky-600 dark:text-sky-400" />
-          <p className="text-xs leading-relaxed text-sky-800 dark:text-sky-300">
-            To view the full email wording, search for its subject line in&nbsp;
-            <a
-              href="https://app.im.skeepers.io/admin/tools/sent_emails/search_forms/new"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold underline underline-offset-2 hover:text-sky-600 dark:hover:text-sky-200"
-            >
-              Skeepers Admin
-            </a>.
-          </p>
-        </div>
-      </div>
+      <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+        <div className="flex flex-col gap-8">
+          {/* Intro */}
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground text-balance">
+              Creator Notifications Board
+            </h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Upload or paste the notifications CSV. You will be redirected to the board to visualize it.
+            </p>
+          </div>
 
-      <main className="mx-auto max-w-[1800px] px-4 py-4 sm:px-6">
-        <Tabs defaultValue="timeline" className="flex flex-col gap-4">
-          <div className="sticky top-[73px] z-20 -mx-4 border-b border-border bg-background/80 px-4 pb-3 pt-1 backdrop-blur-sm sm:-mx-6 sm:px-6">
-            <div className="flex flex-col gap-3">
-              <TabsList className="w-fit">
-                <TabsTrigger value="timeline" className="gap-1.5 text-xs">
-                  <Clock className="h-3.5 w-3.5" />
-                  Campaign Timeline
-                </TabsTrigger>
-                <TabsTrigger value="all" className="gap-1.5 text-xs">
-                  <LayoutGrid className="h-3.5 w-3.5" />
-                  All Notifications
-                </TabsTrigger>
-              </TabsList>
-              <FiltersBar filters={filters} onChange={setFilters} />
+          {/* File drop zone */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-foreground">
+              Upload a .csv file
+            </label>
+            <div
+              onDragOver={(e) => {
+                e.preventDefault()
+                setIsDragging(true)
+              }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={handleDrop}
+              onClick={() => fileInputRef.current?.click()}
+              className={`flex cursor-pointer flex-col items-center gap-3 rounded-lg border-2 border-dashed p-8 transition-colors ${
+                isDragging
+                  ? "border-primary/50 bg-accent"
+                  : fileName
+                    ? "border-primary/30 bg-accent/50"
+                    : "border-border hover:border-primary/30 hover:bg-accent/50"
+              }`}
+              role="button"
+              tabIndex={0}
+              aria-label="Upload CSV file"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") fileInputRef.current?.click()
+              }}
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
+                {fileName ? (
+                  <FileText className="h-5 w-5 text-primary" />
+                ) : (
+                  <Upload className="h-5 w-5 text-muted-foreground" />
+                )}
+              </div>
+              {fileName ? (
+                <div className="text-center">
+                  <p className="text-sm font-medium text-foreground">{fileName}</p>
+                  <p className="text-xs text-muted-foreground">Click or drop to replace</p>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <p className="text-sm font-medium text-foreground">
+                    Drop your CSV file here, or click to browse
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Expected columns: key, categorie, sujet_email, trigger, etape...
+                  </p>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".csv"
+                onChange={handleFileChange}
+                className="hidden"
+                aria-hidden="true"
+              />
             </div>
           </div>
 
-          <TabsContent value="timeline" className="mt-0">
-            <TimelineView data={filteredData} />
-          </TabsContent>
+          {/* Divider */}
+          <div className="flex items-center gap-3">
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-xs font-medium text-muted-foreground">OR</span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
 
-          <TabsContent value="all" className="mt-0">
-            <AllNotificationsView data={filteredData} />
-          </TabsContent>
-        </Tabs>
+          {/* Paste area */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="csv-paste" className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+              <ClipboardPaste className="h-3.5 w-3.5 text-muted-foreground" />
+              Paste CSV content
+            </label>
+            <Textarea
+              id="csv-paste"
+              placeholder={"key,categorie,sujet_email,trigger,canal,etape,...\nNOTIF_001,Order,Your order,..."}
+              value={pasteContent}
+              onChange={(e) => handlePasteChange(e.target.value)}
+              rows={8}
+              className="font-mono text-xs leading-relaxed"
+              disabled={Boolean(fileName)}
+            />
+            {fileName && (
+              <p className="text-xs text-muted-foreground">
+                A file is selected. Remove it to use paste instead.
+              </p>
+            )}
+          </div>
+
+          {/* Error */}
+          {error && (
+            <div className="rounded-md border border-destructive/30 bg-destructive/5 px-4 py-3">
+              <p className="text-sm text-destructive">{error}</p>
+            </div>
+          )}
+
+          {/* Submit */}
+          <Button
+            onClick={handleSubmit}
+            disabled={!hasInput || submitting}
+            size="lg"
+            className="w-full gap-2"
+          >
+            {submitting ? "Redirecting..." : buttonLabel}
+            {!submitting && <ArrowRight className="h-4 w-4" />}
+          </Button>
+
+          {/* Demo link */}
+          <div className="flex items-center justify-center gap-2 pt-2">
+            <span className="text-sm text-muted-foreground">No CSV?</span>
+            <Button variant="link" size="sm" asChild className="h-auto p-0">
+              <Link href="/demo" className="inline-flex items-center gap-1.5">
+                <Eye className="h-3.5 w-3.5" />
+                See demo with sample data
+              </Link>
+            </Button>
+          </div>
+        </div>
       </main>
     </div>
   )

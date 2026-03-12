@@ -9,12 +9,14 @@ export interface Filters {
   search: string
   audience: "all" | "social" | "consumer"
   channel: "all" | "email" | "push"
+  statuses: Set<string>
 }
 
 export const DEFAULT_FILTERS: Filters = {
   search: "",
   audience: "all",
   channel: "all",
+  statuses: new Set(["en_prod"]),
 }
 
 interface FiltersBarProps {
@@ -34,11 +36,30 @@ const CHANNEL_OPTIONS = [
   { value: "push" as const, label: "Push" },
 ]
 
+const STATUS_OPTIONS = [
+  { value: "en_prod", label: "Live", color: "bg-emerald-500" },
+  { value: "ajout_proposed", label: "Proposed", color: "bg-amber-500" },
+  { value: "pas_en_prod", label: "Planned", color: "bg-sky-500" },
+  { value: "a_supprimer", label: "Removed", color: "bg-zinc-400" },
+] as const
+
 export function FiltersBar({ filters, onChange }: FiltersBarProps) {
+  const toggleStatus = (st: string) => {
+    const next = new Set(filters.statuses)
+    if (next.has(st)) {
+      next.delete(st)
+    } else {
+      next.add(st)
+    }
+    onChange({ ...filters, statuses: next })
+  }
+
   const isDefault =
     !filters.search &&
     filters.audience === "all" &&
-    filters.channel === "all"
+    filters.channel === "all" &&
+    filters.statuses.size === 1 &&
+    filters.statuses.has("en_prod")
 
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -98,6 +119,25 @@ export function FiltersBar({ filters, onChange }: FiltersBarProps) {
         ))}
       </div>
 
+      {/* Status filters */}
+      <div className="flex items-center gap-1">
+        <span className="mr-1 text-xs text-muted-foreground">Status:</span>
+        {STATUS_OPTIONS.map((st) => (
+          <button
+            key={st.value}
+            onClick={() => toggleStatus(st.value)}
+            className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+              filters.statuses.has(st.value)
+                ? "bg-foreground text-background"
+                : "bg-muted text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${st.color}`} />
+            {st.label}
+          </button>
+        ))}
+      </div>
+
       {/* Clear filters */}
       {!isDefault && (
         <Badge
@@ -119,9 +159,6 @@ export function applyFilters(data: readonly NotificationRow[], filters: Filters)
   const searchLower = filters.search.toLowerCase()
 
   return data.filter((row) => {
-    // Always exclude archived notifications
-    if (row.categorie === "Archive") return false
-
     // Audience
     if (filters.audience !== "all") {
       if (row.cible !== filters.audience && row.cible !== "both") return false
@@ -133,6 +170,9 @@ export function applyFilters(data: readonly NotificationRow[], filters: Filters)
     } else if (filters.channel === "push") {
       if (row.canal !== "Push" && row.canal !== "Email + Push") return false
     }
+
+    // Status
+    if (filters.statuses.size > 0 && !filters.statuses.has(row.statut)) return false
 
     // Search
     if (searchLower) {

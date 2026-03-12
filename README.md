@@ -1,35 +1,51 @@
 # Creator Notifications Board
 
-A CSV-fed dashboard that visualizes creator-facing emails and push notifications. Built with v0.dev.
-Built by a PM, for PMs. No engineering resources required.
+A visual dashboard to explore and manage creator notification campaigns across their journey.
 
-## The Problem
+## Features
 
-PMs and product teams need a single view of their notification landscape. Today it's scattered across Mailjet, Confluence, and tribal knowledge. Answering "What do we send?" or "Where are the gaps?" takes days instead of minutes.
+- **Campaign Timeline View** - Visualize notifications across journey stages (Application → Review/Expired)
+- **All Notifications View** - Browse all notifications grouped by category, sorted by volume
+- **Filtering** - Search, filter by channel (Email/Push), status, and audience
+- **Dark Mode** - Toggle between light and dark themes
 
-## Why I built this
-Working on a influencer-facing SaaS product, I kept getting the same question from stakeholders: 'What exactly do we send to our users?' No one had a clear answer. The information was scattered across email tools, docs, and people's heads. I spent hours mapping it manually — then realized this was a PM problem worth solving properly.
+## Getting Started
 
-## The Solution
+### Demo
 
-Two views:
-- **Campaign Timeline** – Order lifecycle (application → shipping → reminders → deadline → review). Spot gaps at a glance.
-- **All Notifications** – Grouped by category with filters (Audience, Channel, Search).
+Visit `/demo` to see the board with sample data - no upload required.
 
-Edit a CSV in Sheets/Excel, upload it, done. No backend.
+### With Your Own Data
 
-## Quick Start
+1. Go to `/` (upload page)
+2. Upload a CSV file or paste CSV content
+3. Click "Upload and view board"
+4. You'll be redirected to `/board` with your data
 
-1. Deploy to Vercel (or run `pnpm dev` locally)
-2. Upload your CSV (see `public/data/` for schema)
-3. Use the board
+## CSV Format
 
-## Tradeoffs
+Your CSV should include these columns:
 
-- **CSV as source** – No real-time sync, but zero backend. PMs know Sheets/Excel.
-- **v0.dev** – Shipped fast. Prompt is versioned for regeneration.
-- **Archive hidden** – Rows with `categorie = Archive` are not displayed. Keeps focus on what's live.
+| Column | Description |
+|--------|-------------|
+| `cle` | Unique notification key |
+| `categorie` | Category grouping |
+| `canal` | Channel: `email`, `push`, or `email + push` |
+| `statut` | Status: `en_prod`, `proposed`, `planned`, `removed` |
+| `declencheur` | Trigger description |
+| `timing` | Timing info (e.g., "D+3", "Instant") |
+| `cible` | Audience: `social`, `consumer`, or `both` |
+| `sujet_email` | Email subject line |
+| `push_content` | Push notification content |
+| `body_html` | Full HTML body (optional) |
+| `wording_url` | Link to wording document |
+| `jira_ticket` | Jira ticket reference |
+| `date_added` | Date added (YYYY-MM-DD) |
+| `volume_mois` | Monthly volume |
 
-## What I Learned
+## Tech Stack
 
-The Campaign Timeline view is the killer feature. For lifecycle-driven products, a timeline beats a flat list. CSV + dropdowns in Sheets = PM-friendly, near-zero errors.
+- Next.js 15
+- React 19
+- Tailwind CSS 4
+- shadcn/ui components

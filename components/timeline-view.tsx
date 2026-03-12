@@ -39,23 +39,6 @@ export function TimelineView({ data }: TimelineViewProps) {
 
     for (const row of campaignRows) {
       const timing = row.timing
-
-      // review_expiree with timing "Expired" -> Post-deadline stage
-      // review rows (any timing) -> Review section at the end
-      if (row.etape === "review_expiree") {
-        const expiredIdx = TIMELINE_STAGES.findIndex(s => s.timings.includes(timing))
-        if (expiredIdx >= 0) {
-          groups[expiredIdx].other.push(row)
-        } else {
-          reviewNoTiming.push(row)
-        }
-        continue
-      }
-      if (row.etape === "review") {
-        reviewNoTiming.push(row)
-        continue
-      }
-
       const stageIdx = TIMELINE_STAGES.findIndex((s) =>
         s.timings.includes(timing)
       )
@@ -75,6 +58,8 @@ export function TimelineView({ data }: TimelineViewProps) {
         } else {
           group.other.push(row)
         }
+      } else if (row.etape === "review" && !timing) {
+        reviewNoTiming.push(row)
       }
     }
 
