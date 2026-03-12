@@ -78,7 +78,7 @@ export default function DemoPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-14 items-center justify-between px-4">
+        <div className="container flex h-14 items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <h1 className="text-base sm:text-lg font-semibold truncate">Creator Notifications Board</h1>
             <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
@@ -113,14 +113,14 @@ export default function DemoPage() {
 
       {/* Stats + Filters */}
       <div className="sticky top-14 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 py-3 space-y-3">
+        <div className="container py-3 space-y-3">
           <StatsBar data={filteredNotifications} filters={filters} />
           <FiltersBar filters={filters} onChange={setFilters} />
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-4">
+      <main className="container py-4">
         <Tabs defaultValue="timeline" className="flex flex-col gap-4">
           <TabsList className="w-fit">
             <TabsTrigger value="timeline" className="text-xs sm:text-sm">Campaign Timeline</TabsTrigger>
