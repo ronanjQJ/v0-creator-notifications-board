@@ -22,10 +22,8 @@ Answering "What do we send?" or "Where are the gaps?" takes days instead of minu
 ## The Solution
 
 Two views:
-- **Campaign Timeline** – Order lifecycle (application → review → expiry). 
-Spot gaps at a glance.
-- **All Notifications** – Grouped by category with filters 
-(Audience, Channel, Status, Search).
+- **Campaign Timeline** – Order lifecycle (application → review → expiry). Spot gaps at a glance.
+- **All Notifications** – Grouped by category with filters (Audience, Channel, Status, Search).
 
 Edit a CSV in Sheets/Excel, upload it, done. No backend.
 
@@ -40,7 +38,7 @@ Edit a CSV in Sheets/Excel, upload it, done. No backend.
 ## Getting Started
 
 ### Demo
-Visit `/demo` — sample data loaded automatically, no upload required.
+Visit the [live demo](https://v0-creator-notifications-board-hwkud514a.vercel.app/demo) — sample data loaded automatically, no upload required.
 
 ### With Your Own Data
 1. Go to `/` (upload page)
