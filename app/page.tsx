@@ -2,11 +2,12 @@
 
 import { useState, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { parseCSV } from "@/lib/csv-parser"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Upload, FileText, ClipboardPaste, ArrowRight } from "lucide-react"
+import { Upload, FileText, ClipboardPaste, ArrowRight, Eye } from "lucide-react"
 
 const STORAGE_KEY = "creator-notifications-data"
 
@@ -222,6 +223,17 @@ export default function UploadPage() {
             {submitting ? "Redirecting..." : buttonLabel}
             {!submitting && <ArrowRight className="h-4 w-4" />}
           </Button>
+
+          {/* Demo link */}
+          <div className="flex items-center justify-center gap-2 pt-2">
+            <span className="text-sm text-muted-foreground">No CSV?</span>
+            <Button variant="link" size="sm" asChild className="h-auto p-0">
+              <Link href="/demo" className="inline-flex items-center gap-1.5">
+                <Eye className="h-3.5 w-3.5" />
+                See demo with sample data
+              </Link>
+            </Button>
+          </div>
         </div>
       </main>
     </div>
