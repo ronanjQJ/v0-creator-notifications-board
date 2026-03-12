@@ -19,6 +19,10 @@ export function StatsBar({ data, filters }: StatsBarProps) {
     let pushOnly = 0
     let emailPush = 0
 
+    if (!data || !Array.isArray(data)) {
+      return { live, proposed, planned, emailOnly, pushOnly, emailPush }
+    }
+
     for (const row of data) {
       switch (row.statut) {
         case "en_prod": live++; break
