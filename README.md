@@ -39,7 +39,7 @@ Edit a CSV in Sheets/Excel, upload it, done. No backend.
 Visit the [live demo](https://v0-creator-notifications-board-hwkud514a.vercel.app/demo) — sample data loaded automatically, no upload required.
 
 ### With Your Own Data
-1. Go to `/` (upload page)
+1. Go to https://v0-creator-notifications-board-hwkud514a.vercel.app/
 2. Upload your CSV
 3. You'll be redirected to `/board`
 
