@@ -24,8 +24,6 @@ Edit a CSV in Sheets/Excel, upload it, done. No backend.
 2. Upload your CSV (see `public/data/` for schema)
 3. Use the board
 
-**Live demo:** [v0-creator-notifications-board.vercel.app](https://v0-creator-notifications-board.vercel.app/)
-
 ## Tradeoffs
 
 - **CSV as source** – No real-time sync, but zero backend. PMs know Sheets/Excel.
