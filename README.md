@@ -47,20 +47,20 @@ Visit the [live demo](https://v0-creator-notifications-board-hwkud514a.vercel.ap
 
 | Column | Description |
 |--------|-------------|
-| `cle` | Unique notification key |
-| `categorie` | Category grouping |
-| `canal` | `email`, `push`, or `email + push` |
-| `statut` | `en_prod`, `proposed`, `planned`, `removed` |
-| `declencheur` | Trigger description |
+| `key` | Unique notification key |
+| `category | Category grouping |
+| `chanel` | `email`, `push`, or `email + push` |
+| `status` | `en_prod`, `proposed`, `planned`, `removed` |
+| `trigger` | Trigger description |
 | `timing` | e.g. "D+3", "Instant" |
-| `cible` | `social`, `consumer`, or `both` |
-| `sujet_email` | Email subject line |
+| `target` | `social`, `consumer`, or `both` |
+| `email_subject` | Email subject line |
 | `push_content` | Push notification content |
 | `body_html` | Full HTML body (optional) |
 | `wording_url` | Link to wording doc |
 | `jira_ticket` | Jira reference |
 | `date_added` | YYYY-MM-DD |
-| `volume_mois` | Monthly volume |
+| `volume_month` | Monthly volume |
 
 ## Tradeoffs
 
