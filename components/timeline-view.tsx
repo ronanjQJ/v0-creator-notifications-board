@@ -99,7 +99,7 @@ export function TimelineView({ data }: TimelineViewProps) {
         </div>
       </div>
 
-      <div ref={scrollRef} className="flex gap-0 overflow-x-auto pb-4">
+      <div ref={scrollRef} className="flex gap-0 overflow-x-auto pb-4 scroll-pl-4 snap-x">
         {stages.groups.map((group, idx) => {
           const totalCount =
             group.social.length + group.consumer.length + group.other.length

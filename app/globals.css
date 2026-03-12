@@ -123,3 +123,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .container {
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
