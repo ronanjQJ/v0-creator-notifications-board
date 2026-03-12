@@ -1,10 +1,14 @@
 # Creator Notifications Board
 
 A CSV-fed dashboard that visualizes creator-facing emails and push notifications. Built with v0.dev.
+Built by a PM, for PMs. No engineering resources required.
 
 ## The Problem
 
 PMs and product teams need a single view of their notification landscape. Today it's scattered across Mailjet, Confluence, and tribal knowledge. Answering "What do we send?" or "Where are the gaps?" takes days instead of minutes.
+
+## Why I built this
+I was spending hours mapping what we send to creators. Realized no tool existed for this PM use case — so I built it.
 
 ## The Solution
 
