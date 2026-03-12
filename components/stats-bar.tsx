@@ -40,8 +40,9 @@ export function StatsBar({ data, filters }: StatsBarProps) {
   }, [data])
 
   // Show additional status counts only if those statuses are active in filters
-  const showProposed = filters.statuses.has("ajout_proposed")
-  const showPlanned = filters.statuses.has("pas_en_prod")
+  const statuses = filters?.statuses
+  const showProposed = statuses instanceof Set ? statuses.has("ajout_proposed") : false
+  const showPlanned = statuses instanceof Set ? statuses.has("pas_en_prod") : false
 
   return (
     <div className="flex flex-wrap items-center gap-3 text-sm">
