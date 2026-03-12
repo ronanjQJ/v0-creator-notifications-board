@@ -8,7 +8,7 @@ Built by a PM, for PMs. No engineering resources required.
 PMs and product teams need a single view of their notification landscape. Today it's scattered across Mailjet, Confluence, and tribal knowledge. Answering "What do we send?" or "Where are the gaps?" takes days instead of minutes.
 
 ## Why I built this
-I was spending hours mapping what we send to creators. Realized no tool existed for this PM use case — so I built it.
+Working on a influencer-facing SaaS product, I kept getting the same question from stakeholders: 'What exactly do we send to our users?' No one had a clear answer. The information was scattered across email tools, docs, and people's heads. I spent hours mapping it manually — then realized this was a PM problem worth solving properly.
 
 ## The Solution
 
