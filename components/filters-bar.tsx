@@ -62,12 +62,12 @@ export function FiltersBar({ filters, onChange }: FiltersBarProps) {
     filters.statuses.has("en_prod")
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      {/* Search */}
-      <div className="relative w-full sm:w-64">
+    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+      {/* Search - full width on mobile */}
+      <div className="relative w-full sm:w-56">
         <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
         <Input
-          placeholder="Search key, subject, trigger..."
+          placeholder="Search key, subject..."
           value={filters.search}
           onChange={(e) => onChange({ ...filters, search: e.target.value })}
           className="h-8 pl-8 text-xs"
@@ -83,72 +83,75 @@ export function FiltersBar({ filters, onChange }: FiltersBarProps) {
         )}
       </div>
 
-      {/* Audience filter */}
-      <div className="flex items-center gap-1">
-        <span className="mr-1 text-xs text-muted-foreground">Audience:</span>
-        {AUDIENCE_OPTIONS.map((opt) => (
-          <button
-            key={opt.value}
-            onClick={() => onChange({ ...filters, audience: opt.value })}
-            className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
-              filters.audience === opt.value
-                ? "bg-foreground text-background"
-                : "bg-muted text-muted-foreground hover:bg-accent"
-            }`}
-          >
-            {opt.label}
-          </button>
-        ))}
-      </div>
+      {/* Filter groups - scrollable on mobile */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 sm:overflow-visible sm:flex-wrap sm:gap-3">
+        {/* Audience filter */}
+        <div className="flex items-center gap-1 shrink-0">
+          <span className="mr-1 text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">Audience:</span>
+          {AUDIENCE_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => onChange({ ...filters, audience: opt.value })}
+              className={`rounded-md px-1.5 sm:px-2 py-1 text-[10px] sm:text-xs font-medium transition-colors whitespace-nowrap ${
+                filters.audience === opt.value
+                  ? "bg-foreground text-background"
+                  : "bg-muted text-muted-foreground hover:bg-accent"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
 
-      {/* Channel filter */}
-      <div className="flex items-center gap-1">
-        <span className="mr-1 text-xs text-muted-foreground">Channel:</span>
-        {CHANNEL_OPTIONS.map((opt) => (
-          <button
-            key={opt.value}
-            onClick={() => onChange({ ...filters, channel: opt.value })}
-            className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
-              filters.channel === opt.value
-                ? "bg-foreground text-background"
-                : "bg-muted text-muted-foreground hover:bg-accent"
-            }`}
-          >
-            {opt.label}
-          </button>
-        ))}
-      </div>
+        {/* Channel filter */}
+        <div className="flex items-center gap-1 shrink-0">
+          <span className="mr-1 text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">Channel:</span>
+          {CHANNEL_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => onChange({ ...filters, channel: opt.value })}
+              className={`rounded-md px-1.5 sm:px-2 py-1 text-[10px] sm:text-xs font-medium transition-colors whitespace-nowrap ${
+                filters.channel === opt.value
+                  ? "bg-foreground text-background"
+                  : "bg-muted text-muted-foreground hover:bg-accent"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
 
-      {/* Status filters */}
-      <div className="flex items-center gap-1">
-        <span className="mr-1 text-xs text-muted-foreground">Status:</span>
-        {STATUS_OPTIONS.map((st) => (
-          <button
-            key={st.value}
-            onClick={() => toggleStatus(st.value)}
-            className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
-              filters.statuses.has(st.value)
-                ? "bg-foreground text-background"
-                : "bg-muted text-muted-foreground hover:bg-accent"
-            }`}
-          >
-            <span className={`h-1.5 w-1.5 rounded-full ${st.color}`} />
-            {st.label}
-          </button>
-        ))}
-      </div>
+        {/* Status filters */}
+        <div className="flex items-center gap-1 shrink-0">
+          <span className="mr-1 text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">Status:</span>
+          {STATUS_OPTIONS.map((st) => (
+            <button
+              key={st.value}
+              onClick={() => toggleStatus(st.value)}
+              className={`flex items-center gap-1 rounded-md px-1.5 sm:px-2 py-1 text-[10px] sm:text-xs font-medium transition-colors whitespace-nowrap ${
+                filters.statuses.has(st.value)
+                  ? "bg-foreground text-background"
+                  : "bg-muted text-muted-foreground hover:bg-accent"
+              }`}
+            >
+              <span className={`h-1.5 w-1.5 rounded-full ${st.color}`} />
+              {st.label}
+            </button>
+          ))}
+        </div>
 
-      {/* Clear filters */}
-      {!isDefault && (
-        <Badge
-          variant="secondary"
-          className="cursor-pointer text-xs"
-          onClick={() => onChange(DEFAULT_FILTERS)}
-        >
-          Clear filters
-          <X className="ml-1 h-3 w-3" />
-        </Badge>
-      )}
+        {/* Clear filters */}
+        {!isDefault && (
+          <Badge
+            variant="secondary"
+            className="cursor-pointer text-[10px] sm:text-xs shrink-0"
+            onClick={() => onChange(DEFAULT_FILTERS)}
+          >
+            Clear
+            <X className="ml-1 h-3 w-3" />
+          </Badge>
+        )}
+      </div>
     </div>
   )
 }

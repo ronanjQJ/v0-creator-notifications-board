@@ -45,43 +45,43 @@ export function StatsBar({ data, filters }: StatsBarProps) {
   const showPlanned = statuses instanceof Set ? statuses.has("pas_en_prod") : false
 
   return (
-    <div className="flex flex-wrap items-center gap-3 text-sm">
-      <div className="flex items-center gap-4">
-        <span className="flex items-center gap-1.5">
+    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+      <div className="flex items-center gap-2 sm:gap-4">
+        <span className="flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-emerald-500" />
           <span className="font-medium text-foreground">{stats.live}</span>
           <span className="text-muted-foreground">live</span>
         </span>
         {showProposed && stats.proposed > 0 && (
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full bg-amber-500" />
             <span className="font-medium text-foreground">{stats.proposed}</span>
-            <span className="text-muted-foreground">proposed</span>
+            <span className="text-muted-foreground hidden sm:inline">proposed</span>
           </span>
         )}
         {showPlanned && stats.planned > 0 && (
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full bg-sky-500" />
             <span className="font-medium text-foreground">{stats.planned}</span>
-            <span className="text-muted-foreground">planned</span>
+            <span className="text-muted-foreground hidden sm:inline">planned</span>
           </span>
         )}
       </div>
 
       <span className="hidden h-4 w-px bg-border sm:block" />
 
-      <div className="flex items-center gap-3 text-muted-foreground">
+      <div className="flex items-center gap-2 sm:gap-3 text-muted-foreground">
         <span className="flex items-center gap-1" title="Email only">
-          <Mail className="h-3.5 w-3.5" />
-          <span className="text-xs">{stats.emailOnly}</span>
+          <Mail className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          <span className="text-[10px] sm:text-xs">{stats.emailOnly}</span>
         </span>
         <span className="flex items-center gap-1" title="Push only">
-          <Bell className="h-3.5 w-3.5" />
-          <span className="text-xs">{stats.pushOnly}</span>
+          <Bell className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          <span className="text-[10px] sm:text-xs">{stats.pushOnly}</span>
         </span>
         <span className="flex items-center gap-1" title="Email + Push">
-          <Zap className="h-3.5 w-3.5" />
-          <span className="text-xs">{stats.emailPush}</span>
+          <Zap className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          <span className="text-[10px] sm:text-xs">{stats.emailPush}</span>
         </span>
       </div>
     </div>
