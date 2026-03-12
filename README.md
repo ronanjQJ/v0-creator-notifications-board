@@ -72,4 +72,11 @@ Visit `/demo` — sample data loaded automatically, no upload required.
 - **v0.dev** – Shipped fast. Prompt is versioned for regeneration.
 - **Demo mode** – Separate route, never touches your real data.
 
-## What
+## What I Learned
+
+The Campaign Timeline view is the killer feature. For lifecycle-driven products, 
+a timeline beats a flat list. CSV + Sheets = PM-friendly, near-zero errors.
+
+## Tech Stack
+
+Next.js 15 · React 19 · Tailwind CSS 4 · shadcn/ui
