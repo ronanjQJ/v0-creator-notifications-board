@@ -1,6 +1,7 @@
 # Creator Notifications Board
 
 A visual dashboard to explore and manage creator notification campaigns across their journey.
+Demo : https://v0-creator-notifications-board-hwkud514a.vercel.app/demo
 
 ## Features
 
